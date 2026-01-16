@@ -1,0 +1,20 @@
+CC = gcc
+CFLAGS = -Wall -pthread -g
+LDFLAGS = -lrt -pthread
+
+TARGET = chat
+SRC = main.c
+OBJ = $(SRC:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+%.o: %.c core_protocol.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJ)
+
+rebuild: clean all
